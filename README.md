@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # TA-nmon: Technical Addon for Nmon Performance Monitor for Splunk Enterprise
 
 Copyright 2014 Guilhem Marchand	
@@ -17,5 +15,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 See https://github.com/guilhemmarchand/nmon-for-splunk
->>>>>>> f6f9a6ce45cc1bd834da5a4fd73c04d4765806f6
-# TA-nmon_selfmode
