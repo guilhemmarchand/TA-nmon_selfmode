@@ -33,36 +33,41 @@ fi
 
 if ! [ -d ${NMON_VAR} ]; then
     mkdir ${NMON_VAR}
+else
+    # Remove any existing temp files
+    rm -f ${NMON_VAR}/nmon_manage.sh.tmp.*
 fi
 
-# Remove any existing temp files
-rm ${NMON_VAR}/nmon_manage.sh.tmp.*
+# Only run if the nmon_repository directory were found, if it does not exist, this is probably too early to run
+if [ -d ${NMON_VAR}/var/nmon_repository ]; then
 
-for nmon_file in `find ${NMON_VAR}/var/nmon_repository -name "*.nmon" -type f -print`; do
+    for nmon_file in `find ${NMON_VAR}/var/nmon_repository -name "*.nmon" -type f -print`; do
 
-    # Verify Perl availability (Perl will be more commonly available than Python)
-    PERL=`which perl >/dev/null 2>&1`
+        # Verify Perl availability (Perl will be more commonly available than Python)
+        PERL=`which perl >/dev/null 2>&1`
 
-    if [ $? -eq 0 ]; then
+        if [ $? -eq 0 ]; then
 
-        # Use Perl to get PID file age in seconds
-        perl -e "\$mtime=(stat(\"$nmon_file\"))[9]; \$cur_time=time();  print \$cur_time - \$mtime;" > ${NMON_VAR}/nmon_manage.sh.tmp.$$
+            # Use Perl to get PID file age in seconds
+            perl -e "\$mtime=(stat(\"$nmon_file\"))[9]; \$cur_time=time();  print \$cur_time - \$mtime;" > ${NMON_VAR}/nmon_manage.sh.tmp.$$
 
-    else
+        else
 
-        # Use Python to get PID file age in seconds
-        python -c "import os; import time; now = time.strftime(\"%s\"); print(int(int(now)-(os.path.getmtime('$nmon_file'))))" > ${NMON_VAR}/nmon_manage.sh.tmp.$$
+            # Use Python to get PID file age in seconds
+            python -c "import os; import time; now = time.strftime(\"%s\"); print(int(int(now)-(os.path.getmtime('$nmon_file'))))" > ${NMON_VAR}/nmon_manage.sh.tmp.$$
 
-    fi
+        fi
 
-    nmon_age=`cat ${NMON_VAR}/nmon_manage.sh.tmp.$$`
-    rm ${NMON_VAR}/nmon_manage.sh.tmp.$$
+        nmon_age=`cat ${NMON_VAR}/nmon_manage.sh.tmp.$$`
+        rm ${NMON_VAR}/nmon_manage.sh.tmp.$$
 
-    # Only manage nmon files updated within last 5 minutes (300 sec) minimum to prevent managing ended nmon files
-    if [ ${nmon_age} -lt 300 ]; then
-        cat $nmon_file | ${NMON_BIN}/bin/nmon2csv.sh --mode realtime
-    fi
+        # Only manage nmon files updated within last 5 minutes (300 sec) minimum to prevent managing ended nmon files
+        if [ ${nmon_age} -lt 300 ]; then
+            cat $nmon_file | ${NMON_BIN}/bin/nmon2csv.sh --mode realtime
+        fi
 
-done
+    done
+
+fi
 
 exit 0
