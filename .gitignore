@@ -1,0 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+# local
+local
+
+# Pycharm
+.idea
+
+# metadata/local.meta
+metadata/local.meta
+
+# Ignore the bin/linux which can be extracted
+bin/linux
