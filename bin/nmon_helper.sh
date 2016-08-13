@@ -1166,7 +1166,7 @@ if [ ! -f ${PIDFILE} ]; then
 
 	# PID file not found
 
-	echo "`date`, ${HOST} INFO: Removing staled pid file"
+	echo "`date`, ${HOST} INFO: Removing stale pid file"
 	rm -f ${PIDFILE}
 	
 	# search for any App related instances
@@ -1242,7 +1242,7 @@ else
 	# PID file is empty
 	"")
 
-		echo "`date`, ${HOST} INFO: Removing staled pid file"
+		echo "`date`, ${HOST} INFO: Removing stale pid file"
 		rm -f ${PIDFILE}
 
 		# search for any App related instances
@@ -1349,7 +1349,7 @@ else
 	"false")
 	
 		# Process not found, Nmon has terminated or is not yet started		
-		echo "`date`, ${HOST} INFO: Removing staled pid file"
+		echo "`date`, ${HOST} INFO: Removing stale pid file"
 		rm -f ${PIDFILE}
 
 		echo "`date`, ${HOST} INFO: starting nmon : ${nmon_command} in ${NMON_REPOSITORY}"
