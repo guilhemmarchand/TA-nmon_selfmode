@@ -1,6 +1,6 @@
 
 
-# DISCONTINUED - The TA-nmon_selfmode is now usefull anymore and not maintained, please switch to TA-nmon which does not use anymore the unarchive_cmd
+# DISCONTINUED - The TA-nmon_selfmode is not usefull anymore and not maintained, please switch to TA-nmon which does not use anymore the unarchive_cmd
 
 
 # TA-nmon_selfmode, Alternative Technical Addon for Nmon Performance Monitor - Splunk Enterprise
